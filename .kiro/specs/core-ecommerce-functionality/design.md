@@ -61,6 +61,8 @@ graph TB
 - Bcrypt for password hashing
 - Multer for file uploads
 - Nodemailer for email notifications
+- Socket.io for real-time notifications
+- Node-cron for scheduled tasks (inventory alerts)
 
 ## Components and Interfaces
 
@@ -160,6 +162,11 @@ server/
 - POST `/api/orders` - Create new order
 - GET `/api/orders/:id` - Get order details
 - PUT `/api/orders/:id/status` - Update order status (admin only)
+- GET `/api/admin/orders` - Get all orders with search/filter (admin only)
+
+**Notifications:**
+- POST `/api/notifications/email` - Send email notification
+- GET `/api/notifications/status` - Check notification delivery status
 
 ## Data Models
 
@@ -321,6 +328,105 @@ server/
 - Secure payment processing integration
 - Encrypted storage of sensitive data
 - Audit logging for financial transactions
+
+## Notification System Architecture
+
+### Email Notification Service
+The system implements a comprehensive email notification service to keep customers informed throughout their shopping journey:
+
+**Design Rationale:** Email notifications are critical for customer engagement and order transparency. The service is designed with reliability and retry mechanisms to ensure delivery.
+
+**Components:**
+- **Email Service**: Centralized service using Nodemailer with SMTP configuration
+- **Template Engine**: HTML email templates for different notification types
+- **Queue System**: Email queue with retry logic for failed deliveries
+- **Notification Controller**: API endpoints for triggering and tracking notifications
+
+**Notification Types:**
+- Order confirmation emails (Requirement 7.1)
+- Order status update notifications (Requirement 7.2)
+- Shipping notifications with tracking info (Requirement 7.3)
+- Error and issue alerts (Requirement 7.4)
+- Low inventory alerts for administrators (Requirement 5.5)
+
+**Error Handling:**
+- Failed email delivery logging and retry attempts (Requirement 7.5)
+- Fallback notification methods for critical updates
+- Admin dashboard for monitoring notification delivery status
+
+### Real-time Notification System
+**Design Rationale:** Real-time updates enhance user experience by providing immediate feedback on order status changes and inventory updates.
+
+**Implementation:**
+- Socket.io integration for real-time communication
+- Event-driven architecture for order status updates
+- Real-time inventory notifications for administrators
+- Connection management and authentication for socket connections
+
+## Search and Filtering Architecture
+
+### Product Search System
+**Design Rationale:** Robust search functionality is essential for product discovery and user experience. The system supports multiple search methods to accommodate different user behaviors.
+
+**Search Capabilities:**
+- Full-text search across product name, description, and category (Requirement 1.2)
+- Category-based filtering (Requirement 1.3)
+- Price range filtering and sorting options (Requirement 1.4)
+- Featured products display on homepage (Requirement 1.1)
+
+**Technical Implementation:**
+- MongoDB text indexes for efficient full-text search
+- Aggregation pipelines for complex filtering
+- Pagination for large result sets
+- Search result caching for performance optimization
+
+**Frontend Search Components:**
+- Search bar with autocomplete suggestions
+- Advanced filter sidebar with category, price, and rating filters
+- Sort options (price, name, rating, date)
+- Search results pagination and loading states
+
+## Inventory Management System
+
+### Inventory Tracking
+**Design Rationale:** Accurate inventory management prevents overselling and ensures product availability information is always current.
+
+**Core Features:**
+- Real-time inventory updates on order completion (Requirement 4.5)
+- Low stock threshold monitoring and alerts (Requirement 5.5)
+- Inventory validation during checkout process
+- Bulk inventory management for administrators
+
+**Implementation Details:**
+- Atomic inventory updates using MongoDB transactions
+- Scheduled tasks using node-cron for inventory monitoring
+- Real-time notifications for low stock alerts
+- Inventory history tracking for audit purposes
+
+**Admin Interface:**
+- Inventory dashboard with current stock levels (Requirement 5.4)
+- Low stock alerts and notifications (Requirement 5.5)
+- Bulk inventory update functionality
+- Inventory reports and analytics
+
+## Order Management System
+
+### Order Processing Flow
+**Design Rationale:** The order system must handle the complete lifecycle from cart to delivery while maintaining data integrity and providing transparency.
+
+**Order Lifecycle:**
+1. Cart validation and inventory check
+2. Payment processing and verification (Requirement 4.2)
+3. Order creation and confirmation email (Requirement 4.3, 7.1)
+4. Inventory deduction (Requirement 4.5)
+5. Order fulfillment and status updates (Requirement 6.2, 7.2)
+6. Shipping notification with tracking (Requirement 6.5, 7.3)
+
+**Admin Order Management:**
+- Comprehensive order dashboard with search/filter (Requirement 6.1, 6.3)
+- Order status management with customer notifications (Requirement 6.2)
+- Detailed order view with customer and shipping information (Requirement 6.4)
+- Bulk order processing capabilities
 
 ## Performance Optimization
 
