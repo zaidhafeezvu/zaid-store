@@ -48,6 +48,16 @@ exports.protect = async (req, res, next) => {
       });
     }
 
+    if (!req.user.active) {
+      return res.status(401).json({
+        success: false,
+        error: {
+          message: 'User is not active',
+          code: 'USER_NOT_ACTIVE'
+        }
+      });
+    }
+
     next();
   } catch (err) {
     return res.status(401).json({
@@ -85,7 +95,7 @@ exports.authorize = (...roles) => {
         }
       });
     }
-    
+
     next();
   };
 };
