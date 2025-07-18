@@ -2,6 +2,28 @@ const User = require('../models/User');
 const { validationResult } = require('express-validator');
 
 /**
+ * Helper function to handle validation errors
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {boolean} - Returns true if validation failed (response sent), false if validation passed
+ */
+const handleValidationErrors = (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(400).json({
+      success: false,
+      error: {
+        message: 'Validation failed',
+        code: 'VALIDATION_ERROR',
+        details: errors.array()
+      }
+    });
+    return true; // Validation failed
+  }
+  return false; // Validation passed
+};
+
+/**
  * @desc    Register user
  * @route   POST /api/auth/register
  * @access  Public
@@ -9,16 +31,8 @@ const { validationResult } = require('express-validator');
 exports.register = async (req, res, next) => {
   try {
     // Check for validation errors
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        success: false,
-        error: {
-          message: 'Validation failed',
-          code: 'VALIDATION_ERROR',
-          details: errors.array()
-        }
-      });
+    if (handleValidationErrors(req, res)) {
+      return;
     }
 
     const { name, email, password } = req.body;
@@ -74,16 +88,8 @@ exports.register = async (req, res, next) => {
 exports.login = async (req, res, next) => {
   try {
     // Check for validation errors
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        success: false,
-        error: {
-          message: 'Validation failed',
-          code: 'VALIDATION_ERROR',
-          details: errors.array()
-        }
-      });
+    if (handleValidationErrors(req, res)) {
+      return;
     }
 
     const { email, password } = req.body;
@@ -203,16 +209,8 @@ exports.getProfile = async (req, res, next) => {
 exports.updateProfile = async (req, res, next) => {
   try {
     // Check for validation errors
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        success: false,
-        error: {
-          message: 'Validation failed',
-          code: 'VALIDATION_ERROR',
-          details: errors.array()
-        }
-      });
+    if (handleValidationErrors(req, res)) {
+      return;
     }
 
     const { name, email, address } = req.body;
