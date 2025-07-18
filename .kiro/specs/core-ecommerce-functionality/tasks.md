@@ -14,7 +14,8 @@
   - Create password hashing utilities using bcrypt
   - _Requirements: 3.1, 3.2, 3.5_
 
-- [ ] 2.2 Build authentication API endpoints
+- [x] 2.2 Build authentication API endpoints
+
   - Implement user registration endpoint with validation
   - Create login endpoint with JWT token response
   - Build profile retrieval and update endpoints
