@@ -14,14 +14,15 @@
   - Create password hashing utilities using bcrypt
   - _Requirements: 3.1, 3.2, 3.5_
 
-- [ ] 2.2 Build authentication API endpoints
+- [x] 2.2 Build authentication API endpoints
+
   - Implement user registration endpoint with validation
   - Create login endpoint with JWT token response
   - Build profile retrieval and update endpoints
   - Add input validation and error handling
   - _Requirements: 3.1, 3.2, 3.3_
 
-- [ ] 2.3 Create frontend containers directory structure
+- [x] 2.3 Create frontend containers directory structure
   - Create containers directory with Authentication, Application, and other container folders
   - Set up basic container structure to match existing reducer imports
   - Create placeholder files for existing reducer references
