@@ -10,7 +10,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import store from './store';
 import { SocketProvider } from './contexts/Socket.jsx';
-import Application from './containers/Application';
+import Application from './containers/Application/index.jsx';
 import ScrollToTop from './scrollToTop.jsx';
 
 // Import application sass styles

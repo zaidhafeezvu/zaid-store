@@ -4,8 +4,8 @@
  *
  */
 
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import Notifications from 'react-notification-system-redux';
@@ -16,17 +16,20 @@ import Login from '../Login';
 import Signup from '../Signup';
 import Homepage from '../Homepage';
 import Dashboard from '../Dashboard';
-import ProtectedRoute from '../Authentication/ProtectedRoute';
+import ProtectedRoute from '../Authentication/ProtectedRoute.jsx';
 import AuthStatus from '../Authentication/AuthStatus';
 
 // Import actions
 import { initializeAuth } from '../Authentication/actions';
 
-const Application = ({ initializeAuth, notifications }) => {
+const Application = () => {
+  const dispatch = useDispatch();
+  const notifications = useSelector(state => state.notifications);
+
   useEffect(() => {
     // Initialize authentication on app load
-    initializeAuth();
-  }, [initializeAuth]);
+    dispatch(initializeAuth());
+  }, [dispatch]);
 
   return (
     <div className="application">
@@ -88,7 +91,7 @@ const Application = ({ initializeAuth, notifications }) => {
             <Container>
               <div className="text-center py-5">
                 <h2>Page Not Found</h2>
-                <p>The page you're looking for doesn't exist.</p>
+                <p>The page you&apos;re looking for doesn&apos;t exist.</p>
               </div>
             </Container>
           } />
@@ -98,12 +101,4 @@ const Application = ({ initializeAuth, notifications }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  notifications: state.notifications
-});
-
-const mapDispatchToProps = {
-  initializeAuth
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Application);
+export default Application;

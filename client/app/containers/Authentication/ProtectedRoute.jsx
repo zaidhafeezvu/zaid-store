@@ -4,20 +4,20 @@
  *
  */
 
-import React from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 import { Alert, Container, Row, Col } from 'reactstrap';
 
 const ProtectedRoute = ({ 
   children, 
-  isAuthenticated, 
-  loading,
   redirectTo = '/login',
-  adminOnly = false,
-  user
+  adminOnly = false
 }) => {
   const location = useLocation();
+  const isAuthenticated = useSelector(state => state.authentication.isAuthenticated);
+  const loading = useSelector(state => state.authentication.loading);
+  const user = useSelector(state => state.authentication.user);
 
   // Show loading state while checking authentication
   if (loading) {
@@ -48,7 +48,7 @@ const ProtectedRoute = ({
           <Col md={8}>
             <Alert color="danger" className="mt-5">
               <h4>Access Denied</h4>
-              <p>You don't have permission to access this page. Admin privileges are required.</p>
+              <p>You don&apos;t have permission to access this page. Admin privileges are required.</p>
             </Alert>
           </Col>
         </Row>
@@ -60,10 +60,10 @@ const ProtectedRoute = ({
   return children;
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.authentication.isAuthenticated,
-  loading: state.authentication.loading,
-  user: state.authentication.user
-});
+ProtectedRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+  redirectTo: PropTypes.string,
+  adminOnly: PropTypes.bool
+};
 
-export default connect(mapStateToProps)(ProtectedRoute);
+export default ProtectedRoute;
