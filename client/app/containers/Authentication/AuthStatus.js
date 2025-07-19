@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   UncontrolledDropdown,
   DropdownToggle,
@@ -24,8 +24,10 @@ const AuthStatus = ({
   logoutUser,
   className = '' 
 }) => {
+  const navigate = useNavigate();
+  
   const handleLogout = () => {
-    logoutUser();
+    logoutUser(navigate);
   };
 
   if (!isAuthenticated) {

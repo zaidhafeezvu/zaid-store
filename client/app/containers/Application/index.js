@@ -6,7 +6,7 @@
 
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import Notifications from 'react-notification-system-redux';
 
@@ -57,30 +57,42 @@ const Application = ({ initializeAuth, notifications }) => {
 
       {/* Main Content */}
       <main className="main-content">
-        <Switch>
-          <Route exact path="/" component={Homepage} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Signup} />
-          <Route path="/auth" component={Authentication} />
-          <ProtectedRoute path="/dashboard" component={Dashboard} />
-          <ProtectedRoute path="/profile" component={() => (
-            <Container>
-              <div className="py-5">
-                <Authentication />
-              </div>
-            </Container>
-          )} />
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Signup />} />
+          <Route path="/auth" element={<Authentication />} />
+          <Route 
+            path="/dashboard" 
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/profile" 
+            element={
+              <ProtectedRoute>
+                <Container>
+                  <div className="py-5">
+                    <Authentication />
+                  </div>
+                </Container>
+              </ProtectedRoute>
+            } 
+          />
           
           {/* Catch all route */}
-          <Route render={() => (
+          <Route path="*" element={
             <Container>
               <div className="text-center py-5">
                 <h2>Page Not Found</h2>
                 <p>The page you're looking for doesn't exist.</p>
               </div>
             </Container>
-          )} />
-        </Switch>
+          } />
+        </Routes>
       </main>
     </div>
   );

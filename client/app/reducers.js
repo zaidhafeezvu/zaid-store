@@ -2,10 +2,12 @@
  *
  * reducers.js
  * reducers configuration
+ * 
+ * Note: This file is now deprecated in favor of configuring reducers directly in store.js
+ * using Redux Toolkit's configureStore. This file is kept for reference but is no longer used.
  */
 
 import { combineReducers } from 'redux';
-import { connectRouter } from 'connected-react-router';
 import { reducer as notifications } from 'react-notification-system-redux';
 
 // import reducers
@@ -34,34 +36,32 @@ import orderReducer from './containers/Order/reducer';
 import reviewReducer from './containers/Review/reducer';
 import wishListReducer from './containers/WishList/reducer';
 
-const createReducer = history =>
-    combineReducers({
-        router: connectRouter(history),
-        notifications,
-        application: applicationReducer,
-        homepage: homepageReducer,
-        signup: signupReducer,
-        login: loginReducer,
-        forgotPassword: forgotPasswordReducer,
-        navigation: navigationReducer,
-        authentication: authenticationReducer,
-        cart: cartReducer,
-        newsletter: newsletterReducer,
-        dashboard: dashboardReducer,
-        account: accountReducer,
-        address: addressReducer,
-        resetPassword: resetPasswordReducer,
-        users: usersReducer,
-        product: productReducer,
-        category: categoryReducer,
-        brand: brandReducer,
-        menu: navigationMenuReducer,
-        shop: shopReducer,
-        merchant: merchantReducer,
-        contact: contactReducer,
-        order: orderReducer,
-        review: reviewReducer,
-        wishlist: wishListReducer
-    });
+const rootReducer = combineReducers({
+    notifications,
+    application: applicationReducer,
+    homepage: homepageReducer,
+    signup: signupReducer,
+    login: loginReducer,
+    forgotPassword: forgotPasswordReducer,
+    navigation: navigationReducer,
+    authentication: authenticationReducer,
+    cart: cartReducer,
+    newsletter: newsletterReducer,
+    dashboard: dashboardReducer,
+    account: accountReducer,
+    address: addressReducer,
+    resetPassword: resetPasswordReducer,
+    users: usersReducer,
+    product: productReducer,
+    category: categoryReducer,
+    brand: brandReducer,
+    menu: navigationMenuReducer,
+    shop: shopReducer,
+    merchant: merchantReducer,
+    contact: contactReducer,
+    order: orderReducer,
+    review: reviewReducer,
+    wishlist: wishListReducer
+});
 
-export default createReducer;
+export default rootReducer;

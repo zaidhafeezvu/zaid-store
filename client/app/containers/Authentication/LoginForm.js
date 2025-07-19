@@ -6,7 +6,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Form,
   FormGroup,
@@ -30,6 +30,7 @@ const LoginForm = ({
   error, 
   isAuthenticated 
 }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -78,7 +79,7 @@ const LoginForm = ({
     e.preventDefault();
     
     if (validateForm()) {
-      login(formData);
+      login(formData, navigate);
     }
   };
 

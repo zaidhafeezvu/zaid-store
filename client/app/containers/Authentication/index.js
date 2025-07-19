@@ -6,7 +6,7 @@
 
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { Container, Row, Col } from 'reactstrap';
 
 import LoginForm from './LoginForm';
@@ -43,12 +43,12 @@ const Authentication = ({ initializeAuth, isAuthenticated }) => {
         <Row className="justify-content-center">
           <Col md={6} lg={5}>
             <div className="auth-wrapper">
-              <Switch>
-                <Route path="/login" component={LoginForm} />
-                <Route path="/register" component={RegisterForm} />
-                <Route path="/profile" component={ProfileForm} />
-                <Route path="/auth" render={renderAuthForm} />
-              </Switch>
+              <Routes>
+                <Route path="/login" element={<LoginForm />} />
+                <Route path="/register" element={<RegisterForm />} />
+                <Route path="/profile" element={<ProfileForm />} />
+                <Route path="/auth" element={renderAuthForm()} />
+              </Routes>
             </div>
           </Col>
         </Row>

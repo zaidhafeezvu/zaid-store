@@ -5,7 +5,6 @@
  */
 
 import axios from 'axios';
-import { push } from 'connected-react-router';
 import { success, error } from 'react-notification-system-redux';
 import setToken from '../../utils/token';
 import {
@@ -85,7 +84,7 @@ export const clearAuthErrors = () => ({
 });
 
 // Async action creators (thunks)
-export const login = (credentials) => async (dispatch) => {
+export const login = (credentials, navigate) => async (dispatch) => {
   try {
     dispatch(loginRequest());
     
@@ -105,7 +104,9 @@ export const login = (credentials) => async (dispatch) => {
     }));
     
     // Redirect to dashboard or home
-    dispatch(push('/dashboard'));
+    if (navigate) {
+      navigate('/dashboard');
+    }
     
   } catch (err) {
     const errorMessage = err.response?.data?.error?.message || 'Login failed';
@@ -119,7 +120,7 @@ export const login = (credentials) => async (dispatch) => {
   }
 };
 
-export const register = (userData) => async (dispatch) => {
+export const register = (userData, navigate) => async (dispatch) => {
   try {
     dispatch(registerRequest());
     
@@ -139,7 +140,9 @@ export const register = (userData) => async (dispatch) => {
     }));
     
     // Redirect to dashboard
-    dispatch(push('/dashboard'));
+    if (navigate) {
+      navigate('/dashboard');
+    }
     
   } catch (err) {
     const errorMessage = err.response?.data?.error?.message || 'Registration failed';
@@ -153,7 +156,7 @@ export const register = (userData) => async (dispatch) => {
   }
 };
 
-export const logoutUser = () => (dispatch) => {
+export const logoutUser = (navigate) => (dispatch) => {
   // Remove token from localStorage and axios headers
   localStorage.removeItem('token');
   setToken(null);
@@ -167,7 +170,9 @@ export const logoutUser = () => (dispatch) => {
   }));
   
   // Redirect to home
-  dispatch(push('/'));
+  if (navigate) {
+    navigate('/');
+  }
 };
 
 export const updateProfile = (profileData) => async (dispatch) => {

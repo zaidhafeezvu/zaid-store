@@ -6,7 +6,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Form,
   FormGroup,
@@ -30,6 +30,7 @@ const RegisterForm = ({
   error, 
   isAuthenticated 
 }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -83,7 +84,7 @@ const RegisterForm = ({
     
     if (validateForm()) {
       const { confirmPassword, ...userData } = formData;
-      register(userData);
+      register(userData, navigate);
     }
   };
 
