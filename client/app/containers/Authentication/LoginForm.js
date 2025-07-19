@@ -5,7 +5,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Form,
@@ -23,14 +23,12 @@ import Validator from 'validatorjs';
 
 import { login, clearAuthErrors } from './actions';
 
-const LoginForm = ({ 
-  login, 
-  clearAuthErrors, 
-  loading, 
-  error, 
-  isAuthenticated 
-}) => {
+const LoginForm = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const loading = useSelector(state => state.authentication.loading);
+  const error = useSelector(state => state.authentication.error);
+  const isAuthenticated = useSelector(state => state.authentication.isAuthenticated);
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -39,8 +37,8 @@ const LoginForm = ({
 
   useEffect(() => {
     // Clear errors when component mounts
-    clearAuthErrors();
-  }, [clearAuthErrors]);
+    dispatch(clearAuthErrors());
+  }, [dispatch]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -79,7 +77,7 @@ const LoginForm = ({
     e.preventDefault();
     
     if (validateForm()) {
-      login(formData, navigate);
+      dispatch(login(formData, navigate));
     }
   };
 
@@ -146,12 +144,12 @@ const LoginForm = ({
             type="submit"
             color="primary"
             size="lg"
-            block
+            className="w-100"
             disabled={loading}
           >
             {loading ? (
               <>
-                <Spinner size="sm" className="mr-2" />
+                <Spinner size="sm" className="me-2" />
                 Logging in...
               </>
             ) : (
@@ -176,15 +174,4 @@ const LoginForm = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  loading: state.authentication.loading,
-  error: state.authentication.error,
-  isAuthenticated: state.authentication.isAuthenticated
-});
-
-const mapDispatchToProps = {
-  login,
-  clearAuthErrors
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default LoginForm;

@@ -5,7 +5,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Form,
@@ -23,14 +23,12 @@ import Validator from 'validatorjs';
 
 import { register, clearAuthErrors } from './actions';
 
-const RegisterForm = ({ 
-  register, 
-  clearAuthErrors, 
-  loading, 
-  error, 
-  isAuthenticated 
-}) => {
+const RegisterForm = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const loading = useSelector(state => state.authentication.loading);
+  const error = useSelector(state => state.authentication.error);
+  const isAuthenticated = useSelector(state => state.authentication.isAuthenticated);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -41,8 +39,8 @@ const RegisterForm = ({
 
   useEffect(() => {
     // Clear errors when component mounts
-    clearAuthErrors();
-  }, [clearAuthErrors]);
+    dispatch(clearAuthErrors());
+  }, [dispatch]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -84,7 +82,7 @@ const RegisterForm = ({
     
     if (validateForm()) {
       const { confirmPassword, ...userData } = formData;
-      register(userData, navigate);
+      dispatch(register(userData, navigate));
     }
   };
 
@@ -189,12 +187,12 @@ const RegisterForm = ({
             type="submit"
             color="primary"
             size="lg"
-            block
+            className="w-100"
             disabled={loading}
           >
             {loading ? (
               <>
-                <Spinner size="sm" className="mr-2" />
+                <Spinner size="sm" className="me-2" />
                 Creating Account...
               </>
             ) : (
@@ -216,15 +214,4 @@ const RegisterForm = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  loading: state.authentication.loading,
-  error: state.authentication.error,
-  isAuthenticated: state.authentication.isAuthenticated
-});
-
-const mapDispatchToProps = {
-  register,
-  clearAuthErrors
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);
+export default RegisterForm;

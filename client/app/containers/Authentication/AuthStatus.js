@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   UncontrolledDropdown,
@@ -18,22 +18,20 @@ import {
 
 import { logoutUser } from './actions';
 
-const AuthStatus = ({ 
-  isAuthenticated, 
-  user, 
-  logoutUser,
-  className = '' 
-}) => {
+const AuthStatus = ({ className = '' }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isAuthenticated = useSelector(state => state.authentication.isAuthenticated);
+  const user = useSelector(state => state.authentication.user);
   
   const handleLogout = () => {
-    logoutUser(navigate);
+    dispatch(logoutUser(navigate));
   };
 
   if (!isAuthenticated) {
     return (
       <div className={`auth-status ${className}`}>
-        <Link to="/login" className="btn btn-outline-primary btn-sm mr-2">
+        <Link to="/login" className="btn btn-outline-primary btn-sm me-2">
           Login
         </Link>
         <Link to="/register" className="btn btn-primary btn-sm">
@@ -52,7 +50,7 @@ const AuthStatus = ({
           className="text-decoration-none p-0"
         >
           <div className="d-flex align-items-center">
-            <div className="user-avatar mr-2">
+            <div className="user-avatar me-2">
               <div className="avatar-circle">
                 {user?.name?.charAt(0).toUpperCase() || 'U'}
               </div>
@@ -70,24 +68,24 @@ const AuthStatus = ({
           </div>
         </DropdownToggle>
         
-        <DropdownMenu right>
+        <DropdownMenu end>
           <DropdownItem header>
             {user?.email}
           </DropdownItem>
           <DropdownItem divider />
           
           <DropdownItem tag={Link} to="/profile">
-            <i className="fa fa-user mr-2"></i>
+            <i className="fa fa-user me-2"></i>
             My Profile
           </DropdownItem>
           
           <DropdownItem tag={Link} to="/dashboard">
-            <i className="fa fa-dashboard mr-2"></i>
+            <i className="fa fa-dashboard me-2"></i>
             Dashboard
           </DropdownItem>
           
           <DropdownItem tag={Link} to="/orders">
-            <i className="fa fa-shopping-bag mr-2"></i>
+            <i className="fa fa-shopping-bag me-2"></i>
             My Orders
           </DropdownItem>
           
@@ -95,7 +93,7 @@ const AuthStatus = ({
             <>
               <DropdownItem divider />
               <DropdownItem tag={Link} to="/admin">
-                <i className="fa fa-cog mr-2"></i>
+                <i className="fa fa-cog me-2"></i>
                 Admin Panel
               </DropdownItem>
             </>
@@ -104,7 +102,7 @@ const AuthStatus = ({
           <DropdownItem divider />
           
           <DropdownItem onClick={handleLogout}>
-            <i className="fa fa-sign-out mr-2"></i>
+            <i className="fa fa-sign-out me-2"></i>
             Logout
           </DropdownItem>
         </DropdownMenu>
@@ -113,13 +111,4 @@ const AuthStatus = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.authentication.isAuthenticated,
-  user: state.authentication.user
-});
-
-const mapDispatchToProps = {
-  logoutUser
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AuthStatus);
+export default AuthStatus;

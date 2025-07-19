@@ -9,9 +9,9 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import store from './store';
-import { SocketProvider } from './contexts/Socket';
+import { SocketProvider } from './contexts/Socket.jsx';
 import Application from './containers/Application';
-import ScrollToTop from './scrollToTop';
+import ScrollToTop from './scrollToTop.jsx';
 
 // Import application sass styles
 import './styles/style.scss';

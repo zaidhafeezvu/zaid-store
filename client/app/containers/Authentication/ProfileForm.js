@@ -5,7 +5,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Form,
   FormGroup,
@@ -24,14 +24,12 @@ import Validator from 'validatorjs';
 
 import { updateProfile, clearAuthErrors } from './actions';
 
-const ProfileForm = ({ 
-  updateProfile, 
-  clearAuthErrors, 
-  loading, 
-  error, 
-  user,
-  isAuthenticated 
-}) => {
+const ProfileForm = () => {
+  const dispatch = useDispatch();
+  const loading = useSelector(state => state.authentication.loading);
+  const error = useSelector(state => state.authentication.error);
+  const user = useSelector(state => state.authentication.user);
+  const isAuthenticated = useSelector(state => state.authentication.isAuthenticated);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -60,8 +58,8 @@ const ProfileForm = ({
         }
       });
     }
-    clearAuthErrors();
-  }, [user, clearAuthErrors]);
+    dispatch(clearAuthErrors());
+  }, [user, dispatch]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -112,7 +110,7 @@ const ProfileForm = ({
     e.preventDefault();
     
     if (validateForm()) {
-      updateProfile(formData);
+      dispatch(updateProfile(formData));
     }
   };
 
@@ -265,7 +263,7 @@ const ProfileForm = ({
           >
             {loading ? (
               <>
-                <Spinner size="sm" className="mr-2" />
+                <Spinner size="sm" className="me-2" />
                 Updating Profile...
               </>
             ) : (
@@ -278,16 +276,4 @@ const ProfileForm = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  loading: state.authentication.loading,
-  error: state.authentication.error,
-  user: state.authentication.user,
-  isAuthenticated: state.authentication.isAuthenticated
-});
-
-const mapDispatchToProps = {
-  updateProfile,
-  clearAuthErrors
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileForm);
+export default ProfileForm;

@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Container, Row, Col } from 'reactstrap';
 
@@ -14,13 +14,15 @@ import RegisterForm from './RegisterForm';
 import ProfileForm from './ProfileForm';
 import { initializeAuth } from './actions';
 
-const Authentication = ({ initializeAuth, isAuthenticated }) => {
+const Authentication = () => {
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector(state => state.authentication.isAuthenticated);
   const location = useLocation();
 
   useEffect(() => {
     // Initialize authentication on app load
-    initializeAuth();
-  }, [initializeAuth]);
+    dispatch(initializeAuth());
+  }, [dispatch]);
 
   const renderAuthForm = () => {
     const path = location.pathname;
@@ -57,12 +59,4 @@ const Authentication = ({ initializeAuth, isAuthenticated }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.authentication.isAuthenticated
-});
-
-const mapDispatchToProps = {
-  initializeAuth
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Authentication);
+export default Authentication;
