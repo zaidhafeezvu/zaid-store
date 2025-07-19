@@ -58,7 +58,7 @@ const Dashboard = ({ user, isAuthenticated }) => {
             <Card>
               <CardHeader>
                 <h5 className="mb-0">
-                  <i className="fa fa-user mr-2"></i>
+                  <i className="fa fa-user me-2"></i>
                   Profile
                 </h5>
               </CardHeader>
@@ -75,7 +75,7 @@ const Dashboard = ({ user, isAuthenticated }) => {
             <Card>
               <CardHeader>
                 <h5 className="mb-0">
-                  <i className="fa fa-shopping-bag mr-2"></i>
+                  <i className="fa fa-shopping-bag me-2"></i>
                   Orders
                 </h5>
               </CardHeader>
@@ -92,7 +92,7 @@ const Dashboard = ({ user, isAuthenticated }) => {
             <Card>
               <CardHeader>
                 <h5 className="mb-0">
-                  <i className="fa fa-heart mr-2"></i>
+                  <i className="fa fa-heart me-2"></i>
                   Wishlist
                 </h5>
               </CardHeader>
@@ -112,33 +112,33 @@ const Dashboard = ({ user, isAuthenticated }) => {
               <Card className="border-warning">
                 <CardHeader className="bg-warning text-dark">
                   <h5 className="mb-0">
-                    <i className="fa fa-cog mr-2"></i>
+                    <i className="fa fa-cog me-2"></i>
                     Admin Panel
                   </h5>
                 </CardHeader>
                 <CardBody>
                   <Row>
                     <Col md={3} className="mb-3">
-                      <Link to="/admin/products" className="btn btn-outline-dark btn-block">
-                        <i className="fa fa-box mr-2"></i>
+                      <Link to="/admin/products" className="btn btn-outline-dark w-100">
+                        <i className="fa fa-box me-2"></i>
                         Manage Products
                       </Link>
                     </Col>
                     <Col md={3} className="mb-3">
-                      <Link to="/admin/orders" className="btn btn-outline-dark btn-block">
-                        <i className="fa fa-list mr-2"></i>
+                      <Link to="/admin/orders" className="btn btn-outline-dark w-100">
+                        <i className="fa fa-list me-2"></i>
                         Manage Orders
                       </Link>
                     </Col>
                     <Col md={3} className="mb-3">
-                      <Link to="/admin/users" className="btn btn-outline-dark btn-block">
-                        <i className="fa fa-users mr-2"></i>
+                      <Link to="/admin/users" className="btn btn-outline-dark w-100">
+                        <i className="fa fa-users me-2"></i>
                         Manage Users
                       </Link>
                     </Col>
                     <Col md={3} className="mb-3">
-                      <Link to="/admin/analytics" className="btn btn-outline-dark btn-block">
-                        <i className="fa fa-chart-bar mr-2"></i>
+                      <Link to="/admin/analytics" className="btn btn-outline-dark w-100">
+                        <i className="fa fa-chart-bar me-2"></i>
                         Analytics
                       </Link>
                     </Col>

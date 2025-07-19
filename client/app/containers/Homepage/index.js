@@ -23,7 +23,7 @@ const Homepage = ({ isAuthenticated, user }) => {
             
             {!isAuthenticated ? (
               <div>
-                <Link to="/register" className="btn btn-primary btn-lg mr-3">
+                <Link to="/register" className="btn btn-primary btn-lg me-3">
                   Get Started
                 </Link>
                 <Link to="/login" className="btn btn-outline-primary btn-lg">
