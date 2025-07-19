@@ -2,6 +2,12 @@
  * Main Application Styles
  */
 
+// Import Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// Import Authentication styles
+@import '../containers/Authentication/styles';
+
 // Base styles
 body {
   margin: 0;

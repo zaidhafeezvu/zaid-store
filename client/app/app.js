@@ -30,16 +30,7 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 // rc-slider style
 import 'rc-slider/assets/index.css';
 
-// Authentication
-const token = localStorage.getItem('token');
-
-if (token) {
-    // authenticate api authorization
-    setToken(token);
-
-    // authenticate routes
-    store.dispatch({ type: SET_AUTH });
-}
+// Authentication initialization will be handled by the Authentication container
 
 const app = () => (
     <Provider store={store}>
